@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Crown Jewel | Wagyu Paitan Master Guide</title>
+    <title>The Side Hustle | Wagyu Paitan Master Guide</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -176,7 +176,7 @@
     <div id="authOverlay" class="auth-overlay">
         <div class="auth-card">
             <div class="h-16 w-16 bg-[#C5A028] text-white flex items-center justify-center rounded-full font-serif font-bold text-3xl mx-auto mb-6">♔</div>
-            <h2 class="text-2xl font-bold serif text-[#2D2A26] mb-2">Crown Jewel Access</h2>
+            <h2 class="text-2xl font-bold serif text-[#2D2A26] mb-2">Side Hustle Access</h2>
             <p class="text-sm text-[#6B665E] mb-6">Authorized Personnel Only</p>
             
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
@@ -210,7 +210,7 @@
                 <div class="flex items-center gap-3">
                     <div class="h-8 w-8 bg-[#C5A028] text-white flex items-center justify-center rounded font-serif font-bold text-xl">♔</div>
                     <div>
-                        <h1 class="text-xl font-bold serif text-[#2D2A26] leading-none">The Crown Jewel</h1>
+                        <h1 class="text-xl font-bold serif text-[#2D2A26] leading-none">The Side Hustle</h1>
                         <p class="text-xs text-[#6B665E] font-medium tracking-wide">DEFINITIVE WAGYU PAITAN</p>
                     </div>
                 </div>
@@ -250,7 +250,7 @@
                 <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Optimal Configuration</h2>
                 <p class="text-[#6B665E] max-w-3xl">
                     We have synthesized the data to determine the <strong>Single Best Recipe</strong>. 
-                    This "Crown Jewel" build optimizes for texture (Tendons), flavor purity (Shiro Shoyu), and margin (Sous Vide Chuck).
+                    This "Side Hustle" build optimizes for texture (Tendons), flavor purity (Shiro Shoyu), and margin (Sous Vide Chuck).
                 </p>
             </div>
 
@@ -361,7 +361,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
                 <div>
                     <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">Inventory Requirements</h2>
-                    <p class="text-[#6B665E] max-w-3xl">Locked-in requirements for the 20-Bowl "Crown Jewel" Batch.</p>
+                    <p class="text-[#6B665E] max-w-3xl">Locked-in requirements for the 20-Bowl "Side Hustle" Batch.</p>
                 </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -468,7 +468,7 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-[#E5E0D8] mt-auto py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-xs text-[#6B665E]">Wagyu Paitan Crown Jewel Edition &copy; 2026.</p>
+            <p class="text-xs text-[#6B665E]">Wagyu Paitan Side Hustle Edition &copy; 2026.</p>
             <p class="text-xs text-[#6B665E] mt-2">Crafted with precision · Served with excellence</p>
         </div>
     </footer>
@@ -506,7 +506,7 @@
         let inactivityTimer;
         
         function checkAuth() {
-            const session = localStorage.getItem('crownJewelSession');
+            const session = localStorage.getItem('sideHustleSession');
             if (!session) return false;
             
             try {
@@ -515,17 +515,17 @@
                 
                 // Check if session is expired
                 if (now - sessionData.timestamp > SESSION_TIMEOUT) {
-                    localStorage.removeItem('crownJewelSession');
+                    localStorage.removeItem('sideHustleSession');
                     return false;
                 }
                 
                 // Update timestamp for activity
                 sessionData.timestamp = now;
-                localStorage.setItem('crownJewelSession', JSON.stringify(sessionData));
+                localStorage.setItem('sideHustleSession', JSON.stringify(sessionData));
                 document.getElementById('userDisplay').textContent = sessionData.username;
                 return true;
             } catch (e) {
-                localStorage.removeItem('crownJewelSession');
+                localStorage.removeItem('sideHustleSession');
                 return false;
             }
         }
@@ -550,7 +550,7 @@
                     username: username,
                     timestamp: Date.now()
                 };
-                localStorage.setItem('crownJewelSession', JSON.stringify(sessionData));
+                localStorage.setItem('sideHustleSession', JSON.stringify(sessionData));
                 
                 // Hide auth overlay immediately
                 const overlay = document.getElementById('authOverlay');
@@ -584,7 +584,7 @@
         
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('crownJewelSession');
+                localStorage.removeItem('sideHustleSession');
                 document.getElementById('authOverlay').classList.remove('hidden');
                 document.getElementById('loginForm').reset();
                 clearTimeout(inactivityTimer);
