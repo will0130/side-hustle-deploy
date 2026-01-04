@@ -6,11 +6,14 @@
     <title>The Side Hustle | Wagyu Paitan Master Guide</title>
     
     <!-- Tailwind CSS -->
-    <script>
-        // Suppress Tailwind CDN warning
-        window.process = { env: { NODE_ENV: 'production' } };
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: {
+                preflight: false,
+            }
+        }
+    </script>
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -194,7 +197,7 @@
             <h2 class="text-2xl font-bold serif text-[#2D2A26] mb-2">Side Hustle Access</h2>
             <p class="text-sm text-[#6B665E] mb-6">Authorized Personnel Only</p>
             
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+            <form id="loginForm" onsubmit="return handleLogin(event)" class="space-y-4">
                 <div class="text-left">
                     <label for="username" class="block text-sm font-medium text-[#2D2A26] mb-2">Username</label>
                     <input type="text" id="username" class="auth-input" placeholder="Enter username" required autocomplete="username">
@@ -219,3 +222,687 @@
     </div>
 
     <!-- Header -->
+    <header class="sticky top-0 z-50 shadow-sm transition-colors duration-300" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 text-white flex items-center justify-center rounded font-serif font-bold text-xl transition-colors" style="background-color: var(--color-accent);">♔</div>
+                    <div>
+                        <h1 class="text-xl font-bold serif leading-none transition-colors" style="color: var(--color-text-main);">The Side Hustle</h1>
+                        <p class="text-xs font-medium tracking-wide transition-colors" style="color: var(--color-text-muted);">DEFINITIVE WAGYU PAITAN</p>
+                    </div>
+                </div>
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">The Verdict</a>
+                    <a href="components.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Gold Tare</a>
+                    <a href="inventory.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Inventory</a>
+                    <a href="process.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Procedure</a>
+                    <a href="assembly.html" class="nav-btn active py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Assembly</a>
+                    <button onclick="toggleDarkMode()" class="py-2 px-3 text-xl transition-colors" style="color: var(--color-accent);" title="Toggle Dark Mode">🌙</button>
+                    <button onclick="logout()" class="py-2 px-4 text-xs font-medium border rounded transition-colors" style="color: var(--color-text-muted); border-color: var(--color-border);" title="Logout">
+                        <span id="userDisplay"></span> 🚪
+                    </button>
+                </nav>
+                <div class="flex items-center gap-3">
+                    <button onclick="logout()" class="hidden md:hidden py-2 px-3 text-xs font-medium text-[#6B665E] hover:text-[#C5A028] border border-[#E5E0D8] rounded" id="mobileLogout">🚪</button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-[#2D2A26] focus:outline-none"><span class="text-2xl">☰</span></button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Nav Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF7] border-t border-[#E5E0D8] px-4 py-2 space-y-2">
+            <a href="index.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">The Verdict</a>
+            <a href="components.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Gold Tare</a>
+            <a href="inventory.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Inventory</a>
+            <a href="process.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Procedure</a>
+            <a href="assembly.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Assembly</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- DASHBOARD: THE VERDICT -->
+        <section id="dashboard" class="hidden fade-in space-y-8">
+            <div class="text-center md:text-left mb-8">
+                <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Optimal Configuration</h2>
+                <p class="text-[#6B665E] max-w-3xl">
+                    We have synthesized the data to determine the <strong>Single Best Recipe</strong>. 
+                    This "Side Hustle" build optimizes for texture (Tendons), flavor purity (Shiro Shoyu), and margin (Sous Vide Chuck).
+                </p>
+            </div>
+
+            <!-- The Winning Specs -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-[#2D2A26] p-6 rounded-lg shadow-sm border border-[#2D2A26] text-white">
+                    <div class="text-xs font-semibold tracking-wider text-[#C5A028] mb-1">BROTH PHYSICS</div>
+                    <div class="text-3xl font-bold serif">Tendon <span class="text-lg font-sans text-gray-400 font-normal">Blitz</span></div>
+                    <div class="text-xs text-gray-400 mt-2">Superior Emulsion Stability</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-[#E5E0D8]">
+                    <div class="text-xs font-semibold tracking-wider text-[#C5A028] mb-1">FLAVOR PROFILE</div>
+                    <div class="text-3xl font-bold serif text-[#2D2A26]">Wagyu <span class="text-lg font-sans text-[#6B665E] font-normal">Gold</span></div>
+                    <div class="text-xs text-[#6B665E] mt-2">Shiro Shoyu (Non-Staining)</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-[#E5E0D8]">
+                    <div class="text-xs font-semibold tracking-wider text-[#C5A028] mb-1">PROTEIN</div>
+                    <div class="text-3xl font-bold serif text-[#2D2A26]">Sous Vide <span class="text-lg font-sans text-[#6B665E] font-normal">Chuck</span></div>
+                    <div class="text-xs text-[#6B665E] mt-2">Cost-Optimized A5 Quality</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-[#E5E0D8]">
+                    <div class="text-xs font-semibold tracking-wider text-[#C5A028] mb-1">EST. COST / BOWL</div>
+                    <div class="text-3xl font-bold serif text-[#2D2A26]">$<span id="costPerBowl">6.25</span> <span class="text-lg font-sans text-[#6B665E] font-normal">CAD</span></div>
+                    <div class="text-xs text-[#6B665E] mt-2">High Margin Potential</div>
+                </div>
+            </div>
+
+            <!-- Rationale Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                <div class="bg-white p-8 rounded-lg shadow-sm border border-[#E5E0D8]">
+                    <h3 class="text-xl font-bold serif mb-6 flex items-center gap-2">
+                        <span class="text-[#C5A028]">★</span> Why this is the Best Recipe
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="font-bold text-[#2D2A26] w-24 flex-shrink-0">The Fat</div>
+                            <p class="text-sm text-[#6B665E]">We chose <strong>Wagyu Femur</strong> over generic beef. The high oleic acid content creates a naturally sweet, aromatic lipid layer that requires less chemical modification.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="font-bold text-[#2D2A26] w-24 flex-shrink-0">The Texture</div>
+                            <p class="text-sm text-[#6B665E]">We rejected the standard "boil knuckle" method in favor of the <strong>Tendon Blitz</strong>. Immersion blending 4lbs of cooked tendons creates a permanent "latte-like" viscosity that feels luxurious.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="font-bold text-[#2D2A26] w-24 flex-shrink-0">The Tare</div>
+                            <p class="text-sm text-[#6B665E]">We selected <strong>Shiro Shoyu (White)</strong> over the Beef Jus (Dark). Dark soy turns Paitan grey. White soy preserves the "Wagyu Gold" aesthetic.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-[#E5E0D8] flex flex-col justify-center">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-[#C5A028] mb-4 text-center">Optimized Flavor Profile</h3>
+                    <div class="chart-container">
+                        <canvas id="flavorRadar" role="img" aria-label="Radar chart showing the optimized flavor profile"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-[#6B665E] mt-4 italic">All dimensions balanced for premium dining experience</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPONENTS -->
+        <section id="components" class="hidden fade-in space-y-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Golden Formulas</h2>
+                <p class="text-[#6B665E] max-w-3xl">Precise ratios for the chosen <strong>Wagyu Gold Tare</strong> and <strong>A5 Aroma Oil</strong>.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- GOLD TARE -->
+                <div class="bg-white rounded-lg shadow-sm border border-[#E5E0D8] overflow-hidden">
+                    <div class="bg-[#C5A028] p-4 text-white flex justify-between items-center">
+                        <h3 class="text-xl font-bold serif">Wagyu Gold Tare</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs uppercase tracking-wide opacity-80">Yield (ml):</span>
+                            <input type="number" id="tareTarget" value="1000" oninput="calculateTare()" class="recipe-input w-20 px-2 py-1 rounded text-[#2D2A26] font-mono text-sm font-bold">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <ul id="tareList" class="space-y-3 text-sm mb-6"></ul>
+                        <div class="bg-[#FDFBF7] p-4 rounded border border-[#E5E0D8]">
+                            <strong class="block text-[#2D2A26] mb-2 text-xs uppercase">Method</strong>
+                            <p class="text-sm text-[#6B665E]">Combine Mirin and Sake. Boil to burn off alcohol (2 mins). Dissolve Salt. Stir in Shiro Shoyu and steep Shiitake cold. <span class="font-bold">Do not boil the Shoyu.</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AROMA OIL -->
+                <div class="bg-white rounded-lg shadow-sm border border-[#E5E0D8] overflow-hidden">
+                    <div class="bg-[#2D2A26] p-4 text-white flex justify-between items-center">
+                        <h3 class="text-xl font-bold serif">A5 "Side Hustle" Oil</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs uppercase tracking-wide opacity-80">Yield (g):</span>
+                            <input type="number" id="oilTarget" value="500" oninput="calculateOil()" class="recipe-input w-20 px-2 py-1 rounded text-[#2D2A26] font-mono text-sm font-bold">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <ul id="oilList" class="space-y-3 text-sm mb-6"></ul>
+                        <div class="bg-[#FDFBF7] p-4 rounded border border-[#E5E0D8]">
+                            <strong class="block text-[#2D2A26] mb-2 text-xs uppercase">Method</strong>
+                            <p class="text-sm text-[#6B665E]">Place trim in cold pan. Render slowly. Add garlic/negi. Fry until dark amber (Maillard reaction). Strain immediately. <span class="font-bold">Pure profit center.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INVENTORY -->
+        <section id="inventory" class="hidden fade-in space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
+                <div>
+                    <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">Inventory Requirements</h2>
+                    <p class="text-[#6B665E] max-w-3xl">Locked-in requirements for the 20-Bowl "Side Hustle" Batch.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white rounded-lg shadow-sm border border-[#E5E0D8] overflow-hidden flex flex-col">
+                    <div class="p-4 border-b border-[#E5E0D8] bg-gray-50 flex justify-between items-center">
+                        <h3 class="font-bold serif">Ingredients</h3>
+                        <div class="flex gap-2">
+                            <button onclick="filterInventory('all')" class="text-xs px-3 py-1 bg-white border border-[#E5E0D8] rounded hover:bg-gray-100 transition">All</button>
+                            <button onclick="filterInventory('Bones')" class="text-xs px-3 py-1 bg-white border border-[#E5E0D8] rounded hover:bg-gray-100 transition">Bones</button>
+                            <button onclick="filterInventory('Topping')" class="text-xs px-3 py-1 bg-white border border-[#E5E0D8] rounded hover:bg-gray-100 transition">Toppings</button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto custom-scrollbar flex-grow">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-[#FDFBF7] text-[#6B665E] font-medium border-b border-[#E5E0D8]">
+                                <tr>
+                                    <th class="px-6 py-3">Ingredient</th>
+                                    <th class="px-6 py-3">Source</th>
+                                    <th class="px-6 py-3 text-right">Qty</th>
+                                    <th class="px-6 py-3 text-right">Cost</th>
+                                    <th class="px-6 py-3 text-center">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody" class="divide-y divide-[#E5E0D8]"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-[#E5E0D8]">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-[#C5A028] mb-2">Broth Matrix</h3>
+                        <p class="text-xs text-[#6B665E] mb-4">Note the absence of Knuckles. We use Tendons for superior gelatin.</p>
+                        <div class="chart-container" style="height: 250px;"><canvas id="boneRatioChart"></canvas></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-[#E5E0D8]">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-[#C5A028] mb-2">Cost Drivers</h3>
+                        <div class="chart-container" style="height: 250px;"><canvas id="costChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section id="process" class="hidden fade-in space-y-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Execution</h2>
+                <p class="text-[#6B665E] max-w-3xl">The definitive 24-hour workflow. Includes <span class="text-[#C5A028] font-bold">The Tendon Blitz</span> and <span class="text-[#C5A028] font-bold">Sous Vide</span>.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-4 space-y-0" id="timelineNav"></div>
+                <div class="lg:col-span-8">
+                    <div id="stepDetailPanel" class="bg-white p-8 rounded-lg shadow-sm border border-[#E5E0D8] sticky top-24 min-h-[500px]">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span id="detailIcon" class="text-4xl">⏱️</span>
+                            <div>
+                                <h3 id="detailTitle" class="text-2xl font-bold serif text-[#2D2A26]">Select a Step</h3>
+                                <p id="detailDuration" class="text-sm font-bold text-[#C5A028] uppercase tracking-wide"></p>
+                            </div>
+                        </div>
+                        <div class="prose prose-stone max-w-none">
+                            <p id="detailDesc" class="text-lg text-[#6B665E] mb-6"></p>
+                            <div id="detailChecklistContainer" class="hidden">
+                                <h4 class="font-bold text-[#2D2A26] mb-3 border-b border-[#E5E0D8] pb-2">Critical Actions</h4>
+                                <ul id="detailChecklist" class="space-y-3 mb-8"></ul>
+                                <div class="bg-[#FDFBF7] p-4 rounded border border-[#E5E0D8]"><h4 class="font-bold text-[#C5A028] text-sm mb-1">⚠️ Pro Tip</h4><p id="detailTip" class="text-sm text-[#2D2A26] italic"></p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ASSEMBLY -->
+        <section id="assembly" class="fade-in space-y-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">Service & Assembly</h2>
+                <p class="text-[#6B665E] max-w-3xl">Standard build: 350ml Soup, 35ml Tare (10%), 15ml Oil.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-[#E5E0D8] p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="relative w-full max-w-sm mx-auto h-80 flex flex-col justify-end items-center">
+                        <div class="absolute inset-0 flex items-center justify-center -z-10 opacity-10"><span class="text-9xl">🍜</span></div>
+                        <div class="w-48 w-full max-w-[200px] flex flex-col-reverse border-2 border-[#2D2A26] border-t-0 rounded-b-full overflow-hidden bg-white relative h-64 shadow-inner">
+                            <div class="w-full bg-[#E8C547] h-[15%] flex items-center justify-center text-[10px] text-white font-bold opacity-80">Wagyu Chuck (Sous Vide)</div>
+                            <div class="w-full bg-[#F2E8CF] h-[25%] flex items-center justify-center text-xs text-[#6B665E] font-bold border-t border-white/20">Sun Noodle (140g)</div>
+                            <div class="w-full bg-[#E3DCD2] h-[50%] flex items-center justify-center text-xs text-[#6B665E] font-bold border-t border-white/20 transition-all duration-500">Wagyu Paitan (350ml)</div>
+                            <div class="w-full bg-[#5C4033] h-[10%] flex items-center justify-center text-[10px] text-white font-bold border-t border-white/20 transition-all duration-500">Tare/Oil (50ml)</div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="border-b border-[#E5E0D8] pb-4"><h3 class="text-xl font-bold serif text-[#2D2A26]">Service Specs</h3><p class="text-sm text-[#6B665E]">Service temp must be >85°C to keep Wagyu fat liquid.</p></div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span class="font-bold text-[#2D2A26]">Bowl Prep</span><span class="text-[#C5A028] font-mono">Pre-heat Ceramic</span></div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span class="font-bold text-[#2D2A26]">Noodle Cook</span><span class="text-[#C5A028] font-mono">1m 45s (Sun Noodle)</span></div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span class="font-bold text-[#2D2A26]">Soup Temp</span><span class="text-[#C5A028] font-mono">>85°C / 185°F</span></div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span class="font-bold text-[#2D2A26]">Oil Layer</span><span class="text-[#C5A028] font-mono">Float on Surface</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-[#E5E0D8] mt-auto py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-xs text-[#6B665E]">Wagyu Paitan Side Hustle Edition &copy; 2026.</p>
+            <p class="text-xs text-[#6B665E] mt-2">Crafted with precision · Served with excellence</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="editModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onclick="closeEditModal()"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto transform transition-all scale-95 duration-200">
+            <div class="modal-content py-4 text-left px-6">
+                <div class="flex justify-between items-center pb-3 border-b border-[#E5E0D8]"><p class="text-2xl font-bold text-[#2D2A26] serif">Edit Ingredient</p><div class="cursor-pointer z-50" onclick="closeEditModal()"><span class="text-2xl text-[#6B665E]">&times;</span></div></div>
+                <div class="py-4 space-y-4">
+                    <input type="hidden" id="editItemId">
+                    <div><label class="block text-sm font-bold text-[#2D2A26] mb-1">Item Name</label><input type="text" id="editItemName" class="w-full p-2 border border-[#E5E0D8] rounded bg-gray-50"></div>
+                    <div><label class="block text-sm font-bold text-[#2D2A26] mb-1">Brand / Spec</label><input type="text" id="editItemBrand" class="w-full p-2 border border-[#E5E0D8] rounded"></div>
+                    <div class="flex gap-4"><div class="w-1/2"><label class="block text-sm font-bold text-[#2D2A26] mb-1">Qty</label><input type="number" step="0.01" id="editItemQty" class="w-full p-2 border border-[#E5E0D8] rounded"></div><div class="w-1/2"><label class="block text-sm font-bold text-[#2D2A26] mb-1">Unit</label><input type="text" id="editItemUnit" class="w-full p-2 border border-[#E5E0D8] rounded bg-gray-50" readonly></div></div>
+                    <div><label class="block text-sm font-bold text-[#2D2A26] mb-1">Cost ($)</label><input type="number" step="0.01" id="editItemCost" class="w-full p-2 border border-[#E5E0D8] rounded"></div>
+                </div>
+                <div class="flex justify-end pt-2"><button onclick="closeEditModal()" class="px-4 py-2 text-[#6B665E] mr-2">Cancel</button><button onclick="saveEdit()" class="px-4 py-2 bg-[#C5A028] text-white rounded">Save</button></div>
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="fixed bottom-4 right-4 bg-[#2D2A26] text-white px-6 py-3 rounded shadow-lg transform translate-y-20 transition-transform duration-300 flex items-center gap-2 z-50"><span class="text-[#C5A028]">✓</span><span id="toastMsg">Saved</span></div>
+
+    <!-- LOGIC -->
+    <script>
+        // --- AUTHENTICATION SYSTEM ---
+        const AUTHORIZED_USERS = {
+            'chef': 'wagyu2026',
+            'admin': 'crownj3wel',
+            'manager': 'paitan#master',
+            'demo': 'demo123'
+        };
+        
+        const SESSION_TIMEOUT = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+        let inactivityTimer;
+        
+        function checkAuth() {
+            const session = localStorage.getItem('sideHustleSession');
+            if (!session) return false;
+            
+            try {
+                const sessionData = JSON.parse(session);
+                const now = Date.now();
+                
+                // Check if session is expired
+                if (now - sessionData.timestamp > SESSION_TIMEOUT) {
+                    localStorage.removeItem('sideHustleSession');
+                    return false;
+                }
+                
+                // Update timestamp for activity
+                sessionData.timestamp = now;
+                localStorage.setItem('sideHustleSession', JSON.stringify(sessionData));
+                document.getElementById('userDisplay').textContent = sessionData.username;
+                return true;
+            } catch (e) {
+                localStorage.removeItem('sideHustleSession');
+                return false;
+            }
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('authError');
+            
+            // Check credentials
+            if (AUTHORIZED_USERS[username] && AUTHORIZED_USERS[username] === password) {
+                // Create session
+                const sessionData = {
+                    username: username,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('sideHustleSession', JSON.stringify(sessionData));
+                
+                // Hide auth overlay
+                document.getElementById('authOverlay').classList.add('hidden');
+                document.getElementById('userDisplay').textContent = username;
+                
+                // Reset form
+                document.getElementById('loginForm').reset();
+                errorEl.classList.remove('show');
+                
+                // Start inactivity monitor
+                startInactivityMonitor();
+                
+                // Initialize app
+                initializeApp();
+                
+                return false;
+            } else {
+                // Show error
+                errorEl.classList.add('show');
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
+            return false;
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('sideHustleSession');
+                document.getElementById('authOverlay').classList.remove('hidden');
+                document.getElementById('loginForm').reset();
+                clearTimeout(inactivityTimer);
+                
+                // Reset charts to prevent memory leaks
+                Object.values(charts).forEach(chart => {
+                    if (chart && chart.destroy) chart.destroy();
+                });
+                charts = {};
+            }
+        }
+        
+        function startInactivityMonitor() {
+            clearTimeout(inactivityTimer);
+            
+            inactivityTimer = setTimeout(() => {
+                alert('Your session has expired due to inactivity. Please log in again.');
+                logout();
+            }, SESSION_TIMEOUT);
+            
+            // Reset timer on user activity
+            ['mousedown', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+                document.addEventListener(event, () => {
+                    if (checkAuth()) {
+                        startInactivityMonitor();
+                    }
+                }, { passive: true });
+            });
+        }
+        
+        function initializeApp() {
+            renderDashboardCharts();
+            renderInventoryTable();
+            updateDashboardCost();
+            calculateTare();
+            calculateOil();
+        }
+        
+        // --- DATA STORE (OPTIMIZED HYBRID) ---
+        let inventoryData = [
+            { id: 1, item: "Wagyu Marrow Bones", category: "Bones", brand: "Brant Lake Wagyu", qty: 5.5, unit: "kg", cost: 48.00 }, // ~12 lbs
+            { id: 2, item: "Beef Tendons (Green)", category: "Bones", brand: "Glenwood Meats", qty: 1.8, unit: "kg", cost: 15.00 }, // ~4 lbs
+            { id: 3, item: "Beef Neck Bones", category: "Bones", brand: "Brant Lake Wagyu", qty: 1.8, unit: "kg", cost: 18.00 }, // ~4 lbs
+            { id: 100, item: "Shiro Shoyu (White)", category: "Seasoning", brand: "True World Foods", qty: 150, unit: "ml", cost: 8.00 },
+            { id: 101, item: "Hon Mirin", category: "Seasoning", brand: "True World Foods", qty: 500, unit: "ml", cost: 6.00 },
+            { id: 102, item: "Sake", category: "Seasoning", brand: "Hakutsuru", qty: 250, unit: "ml", cost: 5.00 },
+            { id: 103, item: "Fine Sea Salt", category: "Seasoning", brand: "Generic", qty: 150, unit: "g", cost: 1.00 },
+            { id: 104, item: "Dried Shiitake", category: "Seasoning", brand: "True World Foods", qty: 5, unit: "pcs", cost: 2.00 },
+            { id: 10, item: "Sun Noodle (Hakata)", category: "Topping", brand: "Wismettac", qty: 22, unit: "portions", cost: 26.40 },
+            { id: 11, item: "Beef Chuck (Sous Vide)", category: "Topping", brand: "Alberta AAA", qty: 1.4, unit: "kg", cost: 25.00 },
+            { id: 12, item: "Ajitama (Eggs)", category: "Topping", brand: "Local Free Run", qty: 20, unit: "pcs", cost: 10.00 },
+            { id: 13, item: "A5 Fat Trimming", category: "Bones", brand: "Brant Lake", qty: 0.5, unit: "kg", cost: 2.00 },
+        ];
+
+        // RECIPES
+        const tareGold = [
+            { name: "Hon Mirin", pct: 0.40, unit: "ml" },
+            { name: "Sake", pct: 0.20, unit: "ml" },
+            { name: "Shiro Shoyu", pct: 0.10, unit: "ml" },
+            { name: "Fine Sea Salt", pct: 0.10, unit: "g" },
+            { name: "Dried Shiitake", pct: 0.20, unit: "pcs" }
+        ];
+
+        const aromaOil = [
+            { name: "A5 Wagyu Trim", pct: 0.70, unit: "g" },
+            { name: "Crushed Garlic", pct: 0.10, unit: "g" },
+            { name: "Negi (Green)", pct: 0.20, unit: "g" }
+        ];
+
+        // PROCESS
+        const processSteps = [
+            { id: 1, title: "The Purge (24hr)", duration: "24 Hours", icon: "🩸", desc: "Non-negotiable for Wagyu bones. Remove blood to prevent grey soup.", checklist: ["Submerge Brant Lake bones in cold water.", "Change water every 6 hrs.", "Store in walk-in cooler."], tip: "Water must run clear before boiling." },
+            { id: 2, title: "Extraction", duration: "12 Hours", icon: "🔥", desc: "Violent boil to extract fat and flavor.", checklist: ["Boil bones violently for 12 hours.", "Maintain water level.", "Add charred aromatics in last 2 hours.", "Remove large bones."], tip: "Keep the lid cracked." },
+            { id: 3, title: "The Tendon Blitz", duration: "30 Mins", icon: "🌪️", desc: "THE SECRET SAUCE: Force-emulsifying the cooked tendons.", checklist: ["Ensure tendons are soft.", "Use commercial immersion blender.", "Blend tendons directly into liquid.", "Result: Beige Latte texture."], tip: "Don't skip this. This is the texture." },
+            { id: 4, title: "Aroma Oil (Side Hustle)", duration: "30 Mins", icon: "🧄", desc: "Using A5 trimmings for high-value aroma.", checklist: ["Render A5 trimmings slowly.", "Fry garlic/negi until dark brown.", "Strain hot."], tip: "Costs almost nothing, adds huge aroma." },
+            { id: 5, title: "Sous Vide Prep", duration: "24 Hours", icon: "🥩", desc: "Transforming Chuck Roast into Prime Rib texture.", checklist: ["Season Chuck Roast.", "Vacuum seal with ladle of Tare.", "Cook at 57°C (135°F) for 24 hours.", "Ice bath immediately."], tip: "Slice cold for best yield." }
+        ];
+
+        // --- APP LOGIC ---
+        let currentTab = 'dashboard';
+        let charts = {};
+        let currentFilter = 'all';
+
+        function switchTab(tabId) {
+            console.log('Switching to tab:', tabId);
+            document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
+            const targetSection = document.getElementById(tabId);
+            if (!targetSection) {
+                console.error('Tab not found:', tabId);
+                return;
+            }
+            targetSection.classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.getAttribute('onclick').includes(tabId)));
+            document.getElementById('mobile-menu').classList.add('hidden');
+            
+            try {
+                if (tabId === 'dashboard' && !charts.radar) renderDashboardCharts();
+                if (tabId === 'inventory') { 
+                    renderInventoryTable(currentFilter); 
+                    if (!charts.bone || !charts.cost) renderInventoryCharts(); 
+                }
+                if (tabId === 'process') renderTimeline();
+                if (tabId === 'components') { calculateTare(); calculateOil(); }
+            } catch(e) {
+                console.error('Error switching tab:', e);
+            }
+            
+            currentTab = tabId;
+            
+            // Scroll to top on tab change
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+
+        function calculateTare() {
+            const target = parseFloat(document.getElementById('tareTarget').value) || 0;
+            const list = document.getElementById('tareList');
+            list.innerHTML = '';
+            tareGold.forEach(item => {
+                const qty = (item.pct * target).toFixed(1);
+                const li = document.createElement('li');
+                li.className = "flex justify-between items-center pb-1 border-b border-gray-100 last:border-0";
+                li.innerHTML = `<span>${item.name}</span> <span class="font-mono font-bold text-[#2D2A26]">${qty} ${item.unit}</span>`;
+                list.appendChild(li);
+            });
+        }
+
+        function calculateOil() {
+            const target = parseFloat(document.getElementById('oilTarget').value) || 0;
+            const list = document.getElementById('oilList');
+            list.innerHTML = '';
+            aromaOil.forEach(item => {
+                const qty = (item.pct * target).toFixed(1);
+                const li = document.createElement('li');
+                li.className = "flex justify-between items-center pb-1 border-b border-gray-100 last:border-0";
+                li.innerHTML = `<span>${item.name}</span> <span class="font-mono font-bold text-[#2D2A26]">${qty} ${item.unit}</span>`;
+                list.appendChild(li);
+            });
+        }
+
+        // --- EDIT LOGIC ---
+        function openEditModal(id) {
+            const item = inventoryData.find(i => i.id === id);
+            if (!item) return;
+            document.getElementById('editItemId').value = item.id;
+            document.getElementById('editItemName').value = item.item;
+            document.getElementById('editItemBrand').value = item.brand;
+            document.getElementById('editItemQty').value = item.qty;
+            document.getElementById('editItemUnit').value = item.unit;
+            document.getElementById('editItemCost').value = item.cost;
+            const modal = document.getElementById('editModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+            modal.querySelector('.modal-container').classList.add('scale-100');
+            modal.querySelector('.modal-container').classList.remove('scale-95');
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('editModal');
+            modal.querySelector('.modal-container').classList.remove('scale-100');
+            modal.querySelector('.modal-container').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('opacity-0', 'pointer-events-none'); document.body.classList.remove('modal-active'); }, 100);
+        }
+
+        function saveEdit() {
+            const id = parseInt(document.getElementById('editItemId').value);
+            const itemIndex = inventoryData.findIndex(i => i.id === id);
+            if (itemIndex > -1) {
+                inventoryData[itemIndex].item = document.getElementById('editItemName').value;
+                inventoryData[itemIndex].brand = document.getElementById('editItemBrand').value;
+                inventoryData[itemIndex].qty = parseFloat(document.getElementById('editItemQty').value);
+                inventoryData[itemIndex].cost = parseFloat(document.getElementById('editItemCost').value);
+                if(currentTab === 'inventory') { renderInventoryTable(currentFilter); updateInventoryCharts(); }
+                updateDashboardCost();
+                closeEditModal();
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-20');
+                setTimeout(() => toast.classList.add('translate-y-20'), 3000);
+            }
+        }
+
+        function updateDashboardCost() {
+            const totalCost = inventoryData.reduce((sum, item) => sum + item.cost, 0);
+            document.getElementById('costPerBowl').innerText = (totalCost / 20).toFixed(2);
+        }
+
+        // --- RENDER ---
+        function renderDashboardCharts() {
+            const ctx = document.getElementById('flavorRadar').getContext('2d');
+            charts.radar = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Sweetness (Oleic)', 'Creaminess (Gelatin)', 'Umami', 'Salt', 'Smoke', 'Aroma'],
+                    datasets: [{ label: 'Optimum Profile', data: [10, 10, 8, 7, 5, 9], fill: true, backgroundColor: 'rgba(197, 160, 40, 0.2)', borderColor: '#C5A028', pointBackgroundColor: '#C5A028' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: '#E5E0D8' }, grid: { color: '#E5E0D8' }, suggestedMin: 0, suggestedMax: 10 } }, plugins: { legend: { display: false } } }
+            });
+        }
+
+        function renderInventoryTable(filter = 'all') {
+            currentFilter = filter;
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+            const filteredData = filter === 'all' ? inventoryData : inventoryData.filter(item => item.category === filter);
+            filteredData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-[#FDFBF7] transition-colors group";
+                tr.innerHTML = `<td class="px-6 py-4 font-medium text-[#2D2A26]">${item.item}</td><td class="px-6 py-4 text-[#6B665E] text-xs uppercase tracking-wide">${item.brand}</td><td class="px-6 py-4 text-right font-mono">${item.qty} ${item.unit}</td><td class="px-6 py-4 text-right font-mono font-bold text-[#2D2A26]">$${item.cost.toFixed(2)}</td><td class="px-6 py-4 text-center"><button onclick="openEditModal(${item.id})" class="text-[#6B665E] hover:text-[#C5A028] transition-colors p-1">✏️</button></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderInventoryCharts() {
+            const boneData = inventoryData.filter(i => i.category === 'Bones');
+            const ctxBone = document.getElementById('boneRatioChart').getContext('2d');
+            if (charts.bone) charts.bone.destroy();
+            charts.bone = new Chart(ctxBone, {
+                type: 'doughnut',
+                data: { labels: boneData.map(d => d.item), datasets: [{ data: boneData.map(d => d.qty), backgroundColor: ['#C5A028', '#A69080', '#5C4033', '#E5E0D8'], borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: {size: 10} } } } }
+            });
+            const categories = {};
+            inventoryData.forEach(item => { if(!categories[item.category]) categories[item.category] = 0; categories[item.category] += item.cost; });
+            const ctxCost = document.getElementById('costChart').getContext('2d');
+            if (charts.cost) charts.cost.destroy();
+            charts.cost = new Chart(ctxCost, {
+                type: 'bar',
+                data: { labels: Object.keys(categories), datasets: [{ label: 'Cost ($)', data: Object.values(categories), backgroundColor: '#C5A028', borderRadius: 4 }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { display: false }, ticks: { callback: value => '$' + value } }, x: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y.toFixed(2) } } } }
+            });
+        }
+        
+        function updateInventoryCharts() {
+            if (charts.bone) charts.bone.destroy();
+            if (charts.cost) charts.cost.destroy();
+            renderInventoryCharts();
+        }
+
+        function renderTimeline() {
+            const nav = document.getElementById('timelineNav');
+            nav.innerHTML = '';
+            processSteps.forEach((step, index) => {
+                const div = document.createElement('div');
+                div.className = `timeline-item relative pl-12 py-4 cursor-pointer hover:bg-gray-50 rounded-r-lg transition-all group`;
+                div.onclick = () => showStepDetail(index);
+                div.innerHTML = `<div class="timeline-line"></div><div class="absolute left-4 top-5 w-8 h-8 rounded-full border-2 border-[#E5E0D8] bg-white flex items-center justify-center text-sm group-hover:border-[#C5A028] group-hover:text-[#C5A028] z-10 font-bold text-[#6B665E]">${index + 1}</div><h4 class="font-bold text-[#2D2A26] group-hover:text-[#C5A028] transition-colors">${step.title}</h4><p class="text-xs text-[#6B665E]">${step.duration}</p>`;
+                nav.appendChild(div);
+            });
+            showStepDetail(0);
+        }
+
+        function showStepDetail(index) {
+            const step = processSteps[index];
+            document.querySelectorAll('.timeline-item').forEach((el, i) => {
+                if(i === index) { el.classList.add('step-active'); el.querySelector('.rounded-full').classList.add('bg-[#C5A028]', 'text-white', 'border-transparent'); } 
+                else { el.classList.remove('step-active'); el.querySelector('.rounded-full').classList.remove('bg-[#C5A028]', 'text-white', 'border-transparent'); }
+            });
+            document.getElementById('detailIcon').textContent = step.icon;
+            document.getElementById('detailTitle').textContent = step.title;
+            document.getElementById('detailDuration').textContent = step.duration;
+            document.getElementById('detailDesc').textContent = step.desc;
+            document.getElementById('detailChecklistContainer').classList.remove('hidden');
+            document.getElementById('detailTip').textContent = step.tip;
+            const ul = document.getElementById('detailChecklist');
+            ul.innerHTML = '';
+            step.checklist.forEach(item => {
+                const li = document.createElement('li');
+                li.className = "flex items-start gap-2 text-sm text-[#2D2A26]";
+                li.innerHTML = `<span class="text-[#C5A028]">✓</span> ${item}`;
+                ul.appendChild(li);
+            });
+        }
+        
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('editModal');
+                if (!modal.classList.contains('pointer-events-none')) {
+                    closeEditModal();
+                }
+            }
+        });
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
+        window.onload = function() {
+            loadTheme();
+            // Check if user is already authenticated
+            if (checkAuth()) {
+                document.getElementById('authOverlay').classList.add('hidden');
+                startInactivityMonitor();
+                initializeApp();
+            } else {
+                // Show login screen
+                document.getElementById('username').focus();
+            }
+        };
+    </script>
+</body>
+</html>
