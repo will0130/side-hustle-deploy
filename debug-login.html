@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Login - Crown Jewel</title>
+    <style>
+        body { font-family: Arial; padding: 40px; max-width: 600px; margin: 0 auto; }
+        input { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; border: 2px solid #ddd; }
+        button { width: 100%; padding: 12px; background: #C5A028; color: white; border: none; font-size: 16px; cursor: pointer; }
+        .debug { background: #f5f5f5; padding: 15px; margin: 20px 0; border-left: 4px solid #C5A028; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Login Tool</h1>
+    <p>This will show you exactly what's being checked</p>
+    
+    <form id="form" onsubmit="return false;">
+        <label>Username:</label>
+        <input type="text" id="user" value="demo" autocomplete="off">
+        
+        <label>Password:</label>
+        <input type="text" id="pass" value="demo123" autocomplete="off">
+        
+        <button onclick="checkLogin()">Check Login</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <div class="debug">
+        <h3>Valid Credentials:</h3>
+        <ul>
+            <li><b>demo</b> / demo123</li>
+            <li><b>chef</b> / wagyu2026</li>
+            <li><b>admin</b> / crownj3wel (note: 3 not e)</li>
+            <li><b>manager</b> / paitan#master</li>
+        </ul>
+    </div>
+    
+    <script>
+        const AUTHORIZED_USERS = {
+            'chef': 'wagyu2026',
+            'admin': 'crownj3wel',
+            'manager': 'paitan#master',
+            'demo': 'demo123'
+        };
+        
+        function checkLogin() {
+            const username = document.getElementById('user').value;
+            const password = document.getElementById('pass').value;
+            
+            let html = '<div class="debug">';
+            html += '<h3>Debug Info:</h3>';
+            html += '<p>Username entered: <code>"' + username + '"</code></p>';
+            html += '<p>Username length: ' + username.length + '</p>';
+            html += '<p>Password entered: <code>"' + password + '"</code></p>';
+            html += '<p>Password length: ' + password.length + '</p>';
+            html += '<p>Username trimmed: <code>"' + username.trim() + '"</code></p>';
+            html += '<p>Username in database: ' + (AUTHORIZED_USERS[username.trim()] !== undefined) + '</p>';
+            html += '<p>Expected password: <code>"' + (AUTHORIZED_USERS[username.trim()] || 'NOT FOUND') + '"</code></p>';
+            html += '<p>Passwords match: ' + (AUTHORIZED_USERS[username.trim()] === password) + '</p>';
+            
+            if (AUTHORIZED_USERS[username.trim()] && AUTHORIZED_USERS[username.trim()] === password) {
+                html += '<h2 class="success">✅ LOGIN SUCCESSFUL!</h2>';
+                html += '<p>These credentials work! Use them on the main site.</p>';
+            } else {
+                html += '<h2 class="error">❌ LOGIN FAILED</h2>';
+                if (!AUTHORIZED_USERS[username.trim()]) {
+                    html += '<p>Username not found. Check spelling.</p>';
+                } else {
+                    html += '<p>Password incorrect. Check for typos or extra spaces.</p>';
+                }
+            }
+            html += '</div>';
+            
+            document.getElementById('result').innerHTML = html;
+        }
+        
+        // Auto-run on load
+        window.onload = function() {
+            checkLogin();
+        };
+    </script>
+</body>
+</html>
