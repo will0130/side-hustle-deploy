@@ -717,9 +717,22 @@
         }
         
         function initializeApp() {
-            renderDashboardCharts();
+            // Only initialize what's currently visible to reduce load time
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            
+            if (currentPage === 'index.html' || currentPage === '') {
+                renderDashboardCharts();
+                updateDashboardCost();
+            } else if (currentPage === 'components.html') {
+                calculateTare();
+                calculateOil();
+            } else if (currentPage === 'inventory.html') {
+                renderInventoryTable();
+                updateDashboardCost();
+            }
+            
+            // Initialize common elements
             renderInventoryTable();
-            updateDashboardCost();
             calculateTare();
             calculateOil();
         }
@@ -1062,7 +1075,8 @@
                     console.log('Error setting username display');
                 }
                 startInactivityMonitor();
-                setTimeout(() => initializeApp(), 100);
+                // Use requestAnimationFrame for better performance
+                requestAnimationFrame(() => initializeApp());
             } else {
                 // Show login screen explicitly
                 console.log('No valid session, showing login');
