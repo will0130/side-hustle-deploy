@@ -546,8 +546,14 @@
                 };
                 localStorage.setItem('crownJewelSession', JSON.stringify(sessionData));
                 
-                // Hide auth overlay
-                document.getElementById('authOverlay').classList.add('hidden');
+                // Hide auth overlay with smooth transition
+                const overlay = document.getElementById('authOverlay');
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    overlay.style.opacity = '1';
+                }, 500);
+                
                 document.getElementById('userDisplay').textContent = username;
                 
                 // Reset form
@@ -559,12 +565,15 @@
                 
                 // Initialize app
                 initializeApp();
+                
+                return false;
             } else {
                 // Show error
                 errorEl.classList.add('show');
                 document.getElementById('password').value = '';
                 document.getElementById('password').focus();
             }
+            return false;
         }
         
         function logout() {
