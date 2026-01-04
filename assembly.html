@@ -216,11 +216,11 @@
                 </div>
                 <!-- Desktop Nav -->
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="nav-btn active py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">The Verdict</a>
+                    <a href="index.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">The Verdict</a>
                     <a href="components.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Gold Tare</a>
                     <a href="inventory.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Inventory</a>
                     <a href="process.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Procedure</a>
-                    <a href="assembly.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Assembly</a>
+                    <a href="assembly.html" class="nav-btn active py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Assembly</a>
                     <button onclick="logout()" class="py-2 px-4 text-xs font-medium text-[#6B665E] hover:text-[#C5A028] border border-[#E5E0D8] rounded hover:border-[#C5A028] transition-colors" title="Logout">
                         <span id="userDisplay"></span> 🚪
                     </button>
@@ -245,7 +245,7 @@
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- DASHBOARD: THE VERDICT -->
-        <section id="dashboard" class="fade-in space-y-8">
+        <section id="dashboard" class="hidden fade-in space-y-8">
             <div class="text-center md:text-left mb-8">
                 <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Optimal Configuration</h2>
                 <p class="text-[#6B665E] max-w-3xl">
@@ -434,7 +434,7 @@
         </section>
 
         <!-- ASSEMBLY -->
-        <section id="assembly" class="hidden fade-in space-y-8">
+        <section id="assembly" class="fade-in space-y-8">
             <div class="text-center md:text-left">
                 <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">Service & Assembly</h2>
                 <p class="text-[#6B665E] max-w-3xl">Standard build: 350ml Soup, 35ml Tare (10%), 15ml Oil.</p>
