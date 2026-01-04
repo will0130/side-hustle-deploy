@@ -840,11 +840,7 @@
             step.checklist.forEach(item => {
                 const li = document.createElement('li');
                 li.className = "flex items-start gap-2 text-sm text-[#2D2A26]";
-                li.innerH                cd /tmp/crown-jewel-deploy
-                git init
-                git add index.html
-                git commit -m "Initial commit: Crown Jewel Wagyu Paitan application"
-                TML = `<span class="text-[#C5A028]">✓</span> ${item}`;
+                li.innerHTML = `<span class="text-[#C5A028]">✓</span> ${item}`;
                 ul.appendChild(li);
             });
         }
