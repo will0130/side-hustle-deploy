@@ -111,91 +111,88 @@
         /* Enhanced focus states for accessibility */
         button:focus-visible, input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
         
-        /* Sidebar Navigation */
-        .sidebar {
+        /* Menu Bar Navigation */
+        .menu-bar {
             position: fixed;
-            left: 0;
             top: 0;
-            height: 100vh;
-            width: 250px;
+            left: 0;
+            right: 0;
+            height: 60px;
             background-color: var(--color-surface);
-            border-right: 1px solid var(--color-border);
-            z-index: 100;
-            transition: all 0.3s ease;
-            overflow-y: auto;
-        }
-        
-        .sidebar-hidden {
-            transform: translateX(-100%);
-        }
-        
-        .main-with-sidebar {
-            margin-left: 250px;
-            transition: margin-left 0.3s ease;
-        }
-        
-        .main-no-sidebar {
-            margin-left: 0;
-        }
-        
-        .sidebar-nav-item {
+            border-bottom: 2px solid var(--color-border);
+            z-index: 10000;
             display: flex;
             align-items: center;
-            padding: 1rem 1.5rem;
-            color: var(--color-text-muted);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
+            padding: 0 2rem;
+            gap: 2rem;
+            transition: all 0.3s ease;
         }
         
-        .sidebar-nav-item:hover {
+        .menu-bar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-right: auto;
+        }
+        
+        .menu-nav {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .menu-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .menu-nav-item:hover {
             background-color: rgba(197, 160, 40, 0.1);
             color: var(--color-accent);
         }
         
-        .sidebar-nav-item.active {
-            background-color: rgba(197, 160, 40, 0.15);
-            color: var(--color-accent);
-            border-left-color: var(--color-accent);
-            font-weight: 600;
-        }
-        
-        .sidebar-toggle {
-            position: fixed;
-            left: 10px;
-            top: 10px;
-            z-index: 101;
+        .menu-nav-item.active {
             background-color: var(--color-accent);
             color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
         }
         
-        .sidebar-toggle:hover {
-            transform: scale(1.1);
+        .menu-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .main-with-menu {
+            margin-top: 60px;
         }
         
         @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                transform: translateX(-100%);
+            .menu-bar {
+                padding: 0 1rem;
+                gap: 1rem;
             }
-            .sidebar.sidebar-open {
-                transform: translateX(0);
+            .menu-nav {
+                gap: 0.25rem;
             }
-            .main-with-sidebar {
-                margin-left: 0;
+            .menu-nav-item {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
             }
         }
         
         /* Print styles */
         @media print {
-            .sidebar, .sidebar-toggle, header, footer, .nav-btn, button { display: none !important; }
+            .menu-bar, header, footer, .nav-btn, button { display: none !important; }
             section { display: block !important; page-break-inside: avoid; }
-            .main-with-sidebar { margin-left: 0 !important; }
+            .main-with-menu { margin-top: 0 !important; }
         }
         
         /* Authentication Overlay */
@@ -271,48 +268,33 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 
-    <!-- Sidebar Toggle Button -->
-    <button id="sidebarToggle" class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
-
-    <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="sidebar">
-        <div class="p-6 border-b" style="border-color: var(--color-border);">
-            <div class="flex items-center gap-3 mb-2">
-                <div class="h-10 w-10 text-white flex items-center justify-center rounded font-serif font-bold text-2xl" style="background-color: var(--color-accent);">♔</div>
-                <div>
-                    <h1 class="text-lg font-bold serif" style="color: var(--color-text-main);">The Side Hustle</h1>
-                </div>
+    <!-- Menu Bar Navigation -->
+    <nav class="menu-bar">
+        <div class="menu-bar-logo">
+            <div class="h-10 w-10 text-white flex items-center justify-center rounded font-serif font-bold text-xl" style="background-color: var(--color-accent);">♔</div>
+            <div>
+                <h1 class="text-lg font-bold serif" style="color: var(--color-text-main);">The Side Hustle</h1>
+                <p class="text-xs" style="color: var(--color-text-muted);">WAGYU PAITAN</p>
             </div>
-            <p class="text-xs font-medium tracking-wide" style="color: var(--color-text-muted);">DEFINITIVE WAGYU PAITAN</p>
         </div>
         
-        <nav class="py-4">
-            <a href="index.html" class="sidebar-nav-item active">
-                <span class="mr-3">📊</span> The Verdict
-            </a>
-            <a href="components.html" class="sidebar-nav-item">
-                <span class="mr-3">🥇</span> Gold Tare
-            </a>
-            <a href="inventory.html" class="sidebar-nav-item">
-                <span class="mr-3">📦</span> Inventory
-            </a>
-            <a href="process.html" class="sidebar-nav-item">
-                <span class="mr-3">⚙️</span> Procedure
-            </a>
-            <a href="assembly.html" class="sidebar-nav-item">
-                <span class="mr-3">🍜</span> Assembly
-            </a>
-        </nav>
+        <div class="menu-nav">
+            <a href="index.html" class="menu-nav-item active">📊 The Verdict</a>
+            <a href="components.html" class="menu-nav-item">🥇 Gold Tare</a>
+            <a href="inventory.html" class="menu-nav-item">📦 Inventory</a>
+            <a href="process.html" class="menu-nav-item">⚙️ Procedure</a>
+            <a href="assembly.html" class="menu-nav-item">🍜 Assembly</a>
+        </div>
         
-        <div class="px-6 py-4 border-t mt-auto" style="border-color: var(--color-border);">
-            <button onclick="toggleDarkMode()" class="w-full py-2 px-4 mb-2 rounded transition-colors" style="background-color: var(--color-accent); color: white;">
-                🌙 Toggle Theme
+        <div class="menu-actions">
+            <button onclick="toggleDarkMode()" class="py-1.5 px-3 rounded transition-colors text-sm" style="background-color: var(--color-accent); color: white;" title="Toggle Theme">
+                🌙
             </button>
-            <button onclick="logout()" class="w-full py-2 px-4 border rounded transition-colors" style="color: var(--color-text-muted); border-color: var(--color-border);">
-                🚪 Logout (<span id="userDisplay"></span>)
+            <button onclick="logout()" class="py-1.5 px-3 border rounded transition-colors text-sm" style="color: var(--color-text-muted); border-color: var(--color-border);" title="Logout">
+                <span id="userDisplay"></span> 🚪
             </button>
         </div>
-    </aside>
+    </nav>
 
     <!-- Authentication Overlay -->
     <div id="authOverlay" class="auth-overlay">
@@ -346,11 +328,11 @@
     </div>
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 shadow-sm transition-colors duration-300 main-with-sidebar" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);">
+    <header class="transition-colors duration-300 main-with-menu" style="background-color: var(--color-bg); padding-top: 1rem;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center py-4">
                 <div class="flex items-center gap-3">
-                    <h2 class="text-xl font-bold" style="color: var(--color-text-main);">Dashboard</h2>
+                    <h2 class="text-2xl font-bold serif" style="color: var(--color-text-main);">Dashboard</h2>
                 </div>
                 <div class="flex items-center gap-4">
                     <span class="text-sm" style="color: var(--color-text-muted);">Welcome, <span id="userDisplay2"></span></span>
@@ -360,7 +342,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8 main-with-sidebar" style="max-width: none;">
+    <main class="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8 main-with-menu" style="max-width: 1400px; margin: 0 auto;">
 
         <!-- DASHBOARD: THE VERDICT -->
         <section id="dashboard" class="hidden fade-in space-y-8">
