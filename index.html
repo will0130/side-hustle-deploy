@@ -8,6 +8,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Suppress production warning
+        window.process = { env: { NODE_ENV: 'production' } };
+        
         tailwind.config = {
             corePlugins: {
                 preflight: false,
@@ -603,7 +606,8 @@
         };
         
         const SESSION_TIMEOUT = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-        let inactivityTimer;
+        let inactivityTimer = null;
+        let activityListenersAdded = false;
         
         function checkAuth() {
             const session = localStorage.getItem('sideHustleSession');
@@ -689,6 +693,12 @@
             }
         }
         
+        function resetInactivityTimer() {
+            if (checkAuth()) {
+                startInactivityMonitor();
+            }
+        }
+        
         function startInactivityMonitor() {
             clearTimeout(inactivityTimer);
             
@@ -697,14 +707,13 @@
                 logout();
             }, SESSION_TIMEOUT);
             
-            // Reset timer on user activity
-            ['mousedown', 'keydown', 'scroll', 'touchstart'].forEach(event => {
-                document.addEventListener(event, () => {
-                    if (checkAuth()) {
-                        startInactivityMonitor();
-                    }
-                }, { passive: true });
-            });
+            // Add event listeners only once
+            if (!activityListenersAdded) {
+                activityListenersAdded = true;
+                ['mousedown', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+                    document.addEventListener(event, resetInactivityTimer, { passive: true });
+                });
+            }
         }
         
         function initializeApp() {
