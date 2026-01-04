@@ -345,7 +345,7 @@
     <main class="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8 main-with-menu" style="max-width: 1400px; margin: 0 auto;">
 
         <!-- DASHBOARD: THE VERDICT -->
-        <section id="dashboard" class="hidden fade-in space-y-8">
+        <section id="dashboard" class="fade-in space-y-8">
             <div class="text-center md:text-left mb-8">
                 <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Optimal Configuration</h2>
                 <p class="text-[#6B665E] max-w-3xl">
@@ -411,7 +411,7 @@
         </section>
 
         <!-- COMPONENTS -->
-        <section id="components" class="fade-in space-y-8">
+        <section id="components" class="hidden fade-in space-y-8">
             <div class="text-center md:text-left">
                 <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Golden Formulas</h2>
                 <p class="text-[#6B665E] max-w-3xl">Precise ratios for the chosen <strong>Wagyu Gold Tare</strong> and <strong>A5 Aroma Oil</strong>.</p>
@@ -862,15 +862,24 @@
 
         // --- RENDER ---
         function renderDashboardCharts() {
-            const ctx = document.getElementById('flavorRadar').getContext('2d');
-            charts.radar = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Sweetness (Oleic)', 'Creaminess (Gelatin)', 'Umami', 'Salt', 'Smoke', 'Aroma'],
-                    datasets: [{ label: 'Optimum Profile', data: [10, 10, 8, 7, 5, 9], fill: true, backgroundColor: 'rgba(197, 160, 40, 0.2)', borderColor: '#C5A028', pointBackgroundColor: '#C5A028' }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: '#E5E0D8' }, grid: { color: '#E5E0D8' }, suggestedMin: 0, suggestedMax: 10 } }, plugins: { legend: { display: false } } }
-            });
+            try {
+                const canvas = document.getElementById('flavorRadar');
+                if (!canvas) return;
+                
+                if (charts.radar) charts.radar.destroy();
+                
+                const ctx = canvas.getContext('2d');
+                charts.radar = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Sweetness (Oleic)', 'Creaminess (Gelatin)', 'Umami', 'Salt', 'Smoke', 'Aroma'],
+                        datasets: [{ label: 'Optimum Profile', data: [10, 10, 8, 7, 5, 9], fill: true, backgroundColor: 'rgba(197, 160, 40, 0.2)', borderColor: '#C5A028', pointBackgroundColor: '#C5A028' }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: '#E5E0D8' }, grid: { color: '#E5E0D8' }, suggestedMin: 0, suggestedMax: 10 } }, plugins: { legend: { display: false } } }
+                });
+            } catch(e) {
+                console.error('Chart render error:', e);
+            }
         }
 
         function renderInventoryTable(filter = 'all') {
@@ -887,23 +896,32 @@
         }
 
         function renderInventoryCharts() {
-            const boneData = inventoryData.filter(i => i.category === 'Bones');
-            const ctxBone = document.getElementById('boneRatioChart').getContext('2d');
-            if (charts.bone) charts.bone.destroy();
-            charts.bone = new Chart(ctxBone, {
-                type: 'doughnut',
-                data: { labels: boneData.map(d => d.item), datasets: [{ data: boneData.map(d => d.qty), backgroundColor: ['#C5A028', '#A69080', '#5C4033', '#E5E0D8'], borderWidth: 0 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: {size: 10} } } } }
-            });
-            const categories = {};
-            inventoryData.forEach(item => { if(!categories[item.category]) categories[item.category] = 0; categories[item.category] += item.cost; });
-            const ctxCost = document.getElementById('costChart').getContext('2d');
-            if (charts.cost) charts.cost.destroy();
-            charts.cost = new Chart(ctxCost, {
-                type: 'bar',
-                data: { labels: Object.keys(categories), datasets: [{ label: 'Cost ($)', data: Object.values(categories), backgroundColor: '#C5A028', borderRadius: 4 }] },
-                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { display: false }, ticks: { callback: value => '$' + value } }, x: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y.toFixed(2) } } } }
-            });
+            try {
+                const boneData = inventoryData.filter(i => i.category === 'Bones');
+                const ctxBone = document.getElementById('boneRatioChart');
+                if (!ctxBone) return;
+                
+                if (charts.bone) charts.bone.destroy();
+                charts.bone = new Chart(ctxBone.getContext('2d'), {
+                    type: 'doughnut',
+                    data: { labels: boneData.map(d => d.item), datasets: [{ data: boneData.map(d => d.qty), backgroundColor: ['#C5A028', '#A69080', '#5C4033', '#E5E0D8'], borderWidth: 0 }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: {size: 10} } } } }
+                });
+                
+                const categories = {};
+                inventoryData.forEach(item => { if(!categories[item.category]) categories[item.category] = 0; categories[item.category] += item.cost; });
+                const ctxCost = document.getElementById('costChart');
+                if (!ctxCost) return;
+                
+                if (charts.cost) charts.cost.destroy();
+                charts.cost = new Chart(ctxCost.getContext('2d'), {
+                    type: 'bar',
+                    data: { labels: Object.keys(categories), datasets: [{ label: 'Cost ($)', data: Object.values(categories), backgroundColor: '#C5A028', borderRadius: 4 }] },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { display: false }, ticks: { callback: value => '$' + value } }, x: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y.toFixed(2) } } } }
+                });
+            } catch(e) {
+                console.error('Inventory chart error:', e);
+            }
         }
         
         function updateInventoryCharts() {
@@ -988,7 +1006,13 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
         }
 
+        // Prevent multiple initializations
+        let isInitialized = false;
+        
         window.onload = function() {
+            if (isInitialized) return;
+            isInitialized = true;
+            
             loadTheme();
             // Check if user is already authenticated
             if (checkAuth()) {
@@ -1003,10 +1027,11 @@
                     console.log('Error setting username display');
                 }
                 startInactivityMonitor();
-                initializeApp();
+                setTimeout(() => initializeApp(), 100);
             } else {
                 // Show login screen
-                document.getElementById('username').focus();
+                const usernameField = document.getElementById('username');
+                if (usernameField) usernameField.focus();
             }
         };
     </script>
