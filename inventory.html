@@ -348,7 +348,7 @@
     <main class="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8 main-with-menu" style="max-width: 1400px; margin: 0 auto;">
 
         <!-- DASHBOARD: THE VERDICT -->
-        <section id="dashboard" class="hidden fade-in space-y-8">
+        <section id="dashboard" class="fade-in space-y-8">
             <div class="text-center md:text-left mb-8">
                 <h2 class="text-3xl font-bold serif text-[#2D2A26] mb-2">The Optimal Configuration</h2>
                 <p class="text-[#6B665E] max-w-3xl">
@@ -802,29 +802,47 @@
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
 
         function calculateTare() {
-            const target = parseFloat(document.getElementById('tareTarget').value) || 0;
-            const list = document.getElementById('tareList');
-            list.innerHTML = '';
-            tareGold.forEach(item => {
-                const qty = (item.pct * target).toFixed(1);
-                const li = document.createElement('li');
-                li.className = "flex justify-between items-center pb-1 border-b border-gray-100 last:border-0";
-                li.innerHTML = `<span>${item.name}</span> <span class="font-mono font-bold text-[#2D2A26]">${qty} ${item.unit}</span>`;
-                list.appendChild(li);
-            });
+            try {
+                const targetInput = document.getElementById('tareTarget');
+                const list = document.getElementById('tareList');
+                if (!targetInput || !list) {
+                    console.log('Tare elements not found');
+                    return;
+                }
+                const target = parseFloat(targetInput.value) || 1000;
+                list.innerHTML = '';
+                tareGold.forEach(item => {
+                    const qty = (item.pct * target).toFixed(1);
+                    const li = document.createElement('li');
+                    li.className = "flex justify-between items-center pb-1 border-b border-gray-100 last:border-0";
+                    li.innerHTML = `<span>${item.name}</span> <span class="font-mono font-bold text-[#2D2A26]">${qty} ${item.unit}</span>`;
+                    list.appendChild(li);
+                });
+            } catch(e) {
+                console.error('calculateTare error:', e);
+            }
         }
 
         function calculateOil() {
-            const target = parseFloat(document.getElementById('oilTarget').value) || 0;
-            const list = document.getElementById('oilList');
-            list.innerHTML = '';
-            aromaOil.forEach(item => {
-                const qty = (item.pct * target).toFixed(1);
-                const li = document.createElement('li');
-                li.className = "flex justify-between items-center pb-1 border-b border-gray-100 last:border-0";
-                li.innerHTML = `<span>${item.name}</span> <span class="font-mono font-bold text-[#2D2A26]">${qty} ${item.unit}</span>`;
-                list.appendChild(li);
-            });
+            try {
+                const targetInput = document.getElementById('oilTarget');
+                const list = document.getElementById('oilList');
+                if (!targetInput || !list) {
+                    console.log('Oil elements not found');
+                    return;
+                }
+                const target = parseFloat(targetInput.value) || 500;
+                list.innerHTML = '';
+                aromaOil.forEach(item => {
+                    const qty = (item.pct * target).toFixed(1);
+                    const li = document.createElement('li');
+                    li.className = "flex justify-between items-center pb-1 border-b border-gray-100 last:border-0";
+                    li.innerHTML = `<span>${item.name}</span> <span class="font-mono font-bold text-[#2D2A26]">${qty} ${item.unit}</span>`;
+                    list.appendChild(li);
+                });
+            } catch(e) {
+                console.error('calculateOil error:', e);
+            }
         }
 
         // --- EDIT LOGIC ---
