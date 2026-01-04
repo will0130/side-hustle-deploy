@@ -111,10 +111,91 @@
         /* Enhanced focus states for accessibility */
         button:focus-visible, input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
         
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: var(--color-surface);
+            border-right: 1px solid var(--color-border);
+            z-index: 100;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        
+        .main-with-sidebar {
+            margin-left: 250px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .main-no-sidebar {
+            margin-left: 0;
+        }
+        
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-nav-item:hover {
+            background-color: rgba(197, 160, 40, 0.1);
+            color: var(--color-accent);
+        }
+        
+        .sidebar-nav-item.active {
+            background-color: rgba(197, 160, 40, 0.15);
+            color: var(--color-accent);
+            border-left-color: var(--color-accent);
+            font-weight: 600;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            z-index: 101;
+            background-color: var(--color-accent);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+            }
+            .sidebar.sidebar-open {
+                transform: translateX(0);
+            }
+            .main-with-sidebar {
+                margin-left: 0;
+            }
+        }
+        
         /* Print styles */
         @media print {
-            header, footer, .nav-btn, button { display: none !important; }
+            .sidebar, .sidebar-toggle, header, footer, .nav-btn, button { display: none !important; }
             section { display: block !important; page-break-inside: avoid; }
+            .main-with-sidebar { margin-left: 0 !important; }
         }
         
         /* Authentication Overlay */
@@ -190,6 +271,49 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 
+    <!-- Sidebar Toggle Button -->
+    <button id="sidebarToggle" class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+        <div class="p-6 border-b" style="border-color: var(--color-border);">
+            <div class="flex items-center gap-3 mb-2">
+                <div class="h-10 w-10 text-white flex items-center justify-center rounded font-serif font-bold text-2xl" style="background-color: var(--color-accent);">♔</div>
+                <div>
+                    <h1 class="text-lg font-bold serif" style="color: var(--color-text-main);">The Side Hustle</h1>
+                </div>
+            </div>
+            <p class="text-xs font-medium tracking-wide" style="color: var(--color-text-muted);">DEFINITIVE WAGYU PAITAN</p>
+        </div>
+        
+        <nav class="py-4">
+            <a href="index.html" class="sidebar-nav-item active">
+                <span class="mr-3">📊</span> The Verdict
+            </a>
+            <a href="components.html" class="sidebar-nav-item">
+                <span class="mr-3">🥇</span> Gold Tare
+            </a>
+            <a href="inventory.html" class="sidebar-nav-item">
+                <span class="mr-3">📦</span> Inventory
+            </a>
+            <a href="process.html" class="sidebar-nav-item">
+                <span class="mr-3">⚙️</span> Procedure
+            </a>
+            <a href="assembly.html" class="sidebar-nav-item">
+                <span class="mr-3">🍜</span> Assembly
+            </a>
+        </nav>
+        
+        <div class="px-6 py-4 border-t mt-auto" style="border-color: var(--color-border);">
+            <button onclick="toggleDarkMode()" class="w-full py-2 px-4 mb-2 rounded transition-colors" style="background-color: var(--color-accent); color: white;">
+                🌙 Toggle Theme
+            </button>
+            <button onclick="logout()" class="w-full py-2 px-4 border rounded transition-colors" style="color: var(--color-text-muted); border-color: var(--color-border);">
+                🚪 Logout (<span id="userDisplay"></span>)
+            </button>
+        </div>
+    </aside>
+
     <!-- Authentication Overlay -->
     <div id="authOverlay" class="auth-overlay">
         <div class="auth-card">
@@ -222,46 +346,21 @@
     </div>
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 shadow-sm transition-colors duration-300" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);">
+    <header class="sticky top-0 z-50 shadow-sm transition-colors duration-300 main-with-sidebar" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-3">
-                    <div class="h-8 w-8 text-white flex items-center justify-center rounded font-serif font-bold text-xl transition-colors" style="background-color: var(--color-accent);">♔</div>
-                    <div>
-                        <h1 class="text-xl font-bold serif leading-none transition-colors" style="color: var(--color-text-main);">The Side Hustle</h1>
-                        <p class="text-xs font-medium tracking-wide transition-colors" style="color: var(--color-text-muted);">DEFINITIVE WAGYU PAITAN</p>
-                    </div>
+                    <h2 class="text-xl font-bold" style="color: var(--color-text-main);">Dashboard</h2>
                 </div>
-                <!-- Desktop Nav -->
-                <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">The Verdict</a>
-                    <a href="components.html" class="nav-btn active py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Gold Tare</a>
-                    <a href="inventory.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Inventory</a>
-                    <a href="process.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Procedure</a>
-                    <a href="assembly.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Assembly</a>
-                    <button onclick="toggleDarkMode()" class="py-2 px-3 text-xl transition-colors" style="color: var(--color-accent);" title="Toggle Dark Mode">🌙</button>
-                    <button onclick="logout()" class="py-2 px-4 text-xs font-medium border rounded transition-colors" style="color: var(--color-text-muted); border-color: var(--color-border);" title="Logout">
-                        <span id="userDisplay"></span> 🚪
-                    </button>
-                </nav>
-                <div class="flex items-center gap-3">
-                    <button onclick="logout()" class="hidden md:hidden py-2 px-3 text-xs font-medium text-[#6B665E] hover:text-[#C5A028] border border-[#E5E0D8] rounded" id="mobileLogout">🚪</button>
-                    <button onclick="toggleMobileMenu()" class="md:hidden text-[#2D2A26] focus:outline-none"><span class="text-2xl">☰</span></button>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm" style="color: var(--color-text-muted);">Welcome, <span id="userDisplay2"></span></span>
                 </div>
             </div>
-        </div>
-        <!-- Mobile Nav Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF7] border-t border-[#E5E0D8] px-4 py-2 space-y-2">
-            <a href="index.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">The Verdict</a>
-            <a href="components.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Gold Tare</a>
-            <a href="inventory.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Inventory</a>
-            <a href="process.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Procedure</a>
-            <a href="assembly.html" class="block w-full text-left py-2 font-medium text-[#6B665E]">Assembly</a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-grow w-full px-4 sm:px-6 lg:px-8 py-8 main-with-sidebar" style="max-width: none;">
 
         <!-- DASHBOARD: THE VERDICT -->
         <section id="dashboard" class="hidden fade-in space-y-8">
@@ -884,6 +983,22 @@
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         }
+        
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelectorAll('.main-with-sidebar');
+            sidebar.classList.toggle('sidebar-open');
+            if (window.innerWidth > 768) {
+                sidebar.classList.toggle('sidebar-hidden');
+                main.forEach(el => {
+                    el.classList.toggle('main-with-sidebar');
+                    el.classList.toggle('main-no-sidebar');
+                });
+            } else {
+                sidebar.classList.toggle('sidebar-open');
+            }
+        }
 
         // Load saved theme on page load
         function loadTheme() {
@@ -896,6 +1011,9 @@
             // Check if user is already authenticated
             if (checkAuth()) {
                 document.getElementById('authOverlay').classList.add('hidden');
+                const username = JSON.parse(localStorage.getItem('sideHustleSession')).username;
+                document.getElementById('userDisplay').textContent = username;
+                document.getElementById('userDisplay2').textContent = username;
                 startInactivityMonitor();
                 initializeApp();
             } else {
