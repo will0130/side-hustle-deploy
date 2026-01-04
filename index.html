@@ -27,10 +27,21 @@
             --color-border: #E5E0D8;
         }
 
+        [data-theme="dark"] {
+            --color-bg: #1A1A1A;
+            --color-surface: #2D2A26;
+            --color-text-main: #FDFBF7;
+            --color-text-muted: #B8B3AA;
+            --color-accent: #D4AF37;
+            --color-secondary: #FDFBF7;
+            --color-border: #3D3A36;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--color-bg);
             color: var(--color-text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         h1, h2, h3, h4, .serif {
@@ -204,24 +215,25 @@
     </div>
 
     <!-- Header -->
-    <header class="bg-white border-b border-[#E5E0D8] sticky top-0 z-50 shadow-sm">
+    <header class="sticky top-0 z-50 shadow-sm transition-colors duration-300" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-3">
-                    <div class="h-8 w-8 bg-[#C5A028] text-white flex items-center justify-center rounded font-serif font-bold text-xl">♔</div>
+                    <div class="h-8 w-8 text-white flex items-center justify-center rounded font-serif font-bold text-xl transition-colors" style="background-color: var(--color-accent);">♔</div>
                     <div>
-                        <h1 class="text-xl font-bold serif text-[#2D2A26] leading-none">The Side Hustle</h1>
-                        <p class="text-xs text-[#6B665E] font-medium tracking-wide">DEFINITIVE WAGYU PAITAN</p>
+                        <h1 class="text-xl font-bold serif leading-none transition-colors" style="color: var(--color-text-main);">The Side Hustle</h1>
+                        <p class="text-xs font-medium tracking-wide transition-colors" style="color: var(--color-text-muted);">DEFINITIVE WAGYU PAITAN</p>
                     </div>
                 </div>
                 <!-- Desktop Nav -->
                 <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="nav-btn active py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">The Verdict</a>
-                    <a href="components.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Gold Tare</a>
-                    <a href="inventory.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Inventory</a>
-                    <a href="process.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Procedure</a>
-                    <a href="assembly.html" class="nav-btn py-5 text-sm font-medium text-[#6B665E] hover:text-[#2D2A26] transition-colors">Assembly</a>
-                    <button onclick="logout()" class="py-2 px-4 text-xs font-medium text-[#6B665E] hover:text-[#C5A028] border border-[#E5E0D8] rounded hover:border-[#C5A028] transition-colors" title="Logout">
+                    <a href="index.html" class="nav-btn active py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">The Verdict</a>
+                    <a href="components.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Gold Tare</a>
+                    <a href="inventory.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Inventory</a>
+                    <a href="process.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Procedure</a>
+                    <a href="assembly.html" class="nav-btn py-5 text-sm font-medium transition-colors" style="color: var(--color-text-muted);">Assembly</a>
+                    <button onclick="toggleDarkMode()" class="py-2 px-3 text-xl transition-colors" style="color: var(--color-accent);" title="Toggle Dark Mode">🌙</button>
+                    <button onclick="logout()" class="py-2 px-4 text-xs font-medium border rounded transition-colors" style="color: var(--color-text-muted); border-color: var(--color-border);" title="Logout">
                         <span id="userDisplay"></span> 🚪
                     </button>
                 </nav>
@@ -869,7 +881,23 @@
             }
         });
 
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
         window.onload = function() {
+            loadTheme();
             // Check if user is already authenticated
             if (checkAuth()) {
                 document.getElementById('authOverlay').classList.add('hidden');
