@@ -111,12 +111,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.3s ease;
         }
         
         .auth-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
+            display: none !important;
         }
         
         .auth-card {
@@ -546,14 +545,8 @@
                 };
                 localStorage.setItem('crownJewelSession', JSON.stringify(sessionData));
                 
-                // Hide auth overlay with smooth transition
-                const overlay = document.getElementById('authOverlay');
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    overlay.style.opacity = '1';
-                }, 500);
-                
+                // Hide auth overlay immediately
+                document.getElementById('authOverlay').classList.add('hidden');
                 document.getElementById('userDisplay').textContent = username;
                 
                 // Reset form
