@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: white;
+        }
+        .test-box {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 10px 0;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Page - If you see this, HTML is loading</h1>
+    
+    <div class="test-box">
+        <h2>Session Check</h2>
+        <p>Session data: <span id="sessionData"></span></p>
+        <button onclick="clearSession()">Clear Session</button>
+    </div>
+    
+    <div class="test-box">
+        <h2>Navigation Test</h2>
+        <a href="index.html">Go to Main Page</a>
+    </div>
+    
+    <div class="test-box">
+        <h2>Console Output</h2>
+        <pre id="console"></pre>
+    </div>
+    
+    <script>
+        const log = document.getElementById('console');
+        const sessionDisplay = document.getElementById('sessionData');
+        
+        log.textContent = 'JavaScript is running\n';
+        
+        const session = localStorage.getItem('sideHustleSession');
+        if (session) {
+            sessionDisplay.textContent = session;
+            log.textContent += 'Session found: ' + session + '\n';
+        } else {
+            sessionDisplay.textContent = 'No session';
+            log.textContent += 'No session found\n';
+        }
+        
+        function clearSession() {
+            localStorage.removeItem('sideHustleSession');
+            alert('Session cleared! Refresh to test.');
+            location.reload();
+        }
+        
+        log.textContent += 'Page loaded successfully\n';
+    </script>
+</body>
+</html>
