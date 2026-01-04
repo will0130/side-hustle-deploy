@@ -622,7 +622,11 @@
                 // Update timestamp for activity
                 sessionData.timestamp = now;
                 localStorage.setItem('sideHustleSession', JSON.stringify(sessionData));
-                document.getElementById('userDisplay').textContent = sessionData.username;
+                
+                // Update display if element exists
+                const userDisplay = document.getElementById('userDisplay');
+                if (userDisplay) userDisplay.textContent = sessionData.username;
+                
                 return true;
             } catch (e) {
                 localStorage.removeItem('sideHustleSession');
@@ -1014,9 +1018,13 @@
             isInitialized = true;
             
             loadTheme();
+            
+            const authOverlay = document.getElementById('authOverlay');
+            
             // Check if user is already authenticated
             if (checkAuth()) {
-                document.getElementById('authOverlay').classList.add('hidden');
+                console.log('User authenticated, hiding login');
+                authOverlay.classList.add('hidden');
                 try {
                     const username = JSON.parse(localStorage.getItem('sideHustleSession')).username;
                     const userDisplay = document.getElementById('userDisplay');
@@ -1029,7 +1037,9 @@
                 startInactivityMonitor();
                 setTimeout(() => initializeApp(), 100);
             } else {
-                // Show login screen
+                // Show login screen explicitly
+                console.log('No valid session, showing login');
+                authOverlay.classList.remove('hidden');
                 const usernameField = document.getElementById('username');
                 if (usernameField) usernameField.focus();
             }
