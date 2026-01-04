@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login</title>
+</head>
+<body>
+    <h1>Test Login</h1>
+    <form id="testForm">
+        <input type="text" id="user" placeholder="Username"><br><br>
+        <input type="password" id="pass" placeholder="Password"><br><br>
+        <button type="button" onclick="test()">Test</button>
+    </form>
+    <div id="result"></div>
+    
+    <script>
+        const AUTHORIZED_USERS = {
+            'chef': 'wagyu2026',
+            'admin': 'crownj3wel',
+            'manager': 'paitan#master',
+            'demo': 'demo123'
+        };
+        
+        function test() {
+            const username = document.getElementById('user').value.trim();
+            const password = document.getElementById('pass').value;
+            
+            if (AUTHORIZED_USERS[username] && AUTHORIZED_USERS[username] === password) {
+                document.getElementById('result').innerHTML = '<h2 style="color:green">✓ SUCCESS! Credentials work!</h2>';
+            } else {
+                document.getElementById('result').innerHTML = '<h2 style="color:red">✗ FAILED</h2><p>Username: "' + username + '"</p><p>Password: "' + password + '"</p>';
+            }
+        }
+    </script>
+</body>
+</html>
