@@ -669,15 +669,29 @@
         let currentFilter = 'all';
 
         function switchTab(tabId) {
+            console.log('Switching to tab:', tabId);
             document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
             const targetSection = document.getElementById(tabId);
+            if (!targetSection) {
+                console.error('Tab not found:', tabId);
+                return;
+            }
             targetSection.classList.remove('hidden');
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.getAttribute('onclick').includes(tabId)));
             document.getElementById('mobile-menu').classList.add('hidden');
-            if (tabId === 'dashboard' && !charts.radar) renderDashboardCharts();
-            if (tabId === 'inventory') { renderInventoryTable(currentFilter); if (!charts.bone || !charts.cost) renderInventoryCharts(); }
-            if (tabId === 'process') renderTimeline();
-            if (tabId === 'components') { calculateTare(); calculateOil(); }
+            
+            try {
+                if (tabId === 'dashboard' && !charts.radar) renderDashboardCharts();
+                if (tabId === 'inventory') { 
+                    renderInventoryTable(currentFilter); 
+                    if (!charts.bone || !charts.cost) renderInventoryCharts(); 
+                }
+                if (tabId === 'process') renderTimeline();
+                if (tabId === 'components') { calculateTare(); calculateOil(); }
+            } catch(e) {
+                console.error('Error switching tab:', e);
+            }
+            
             currentTab = tabId;
             
             // Scroll to top on tab change
