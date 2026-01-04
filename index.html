@@ -6,11 +6,14 @@
     <title>The Side Hustle | Wagyu Paitan Master Guide</title>
     
     <!-- Tailwind CSS -->
-    <script>
-        // Suppress Tailwind CDN warning
-        window.process = { env: { NODE_ENV: 'production' } };
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: {
+                preflight: false,
+            }
+        }
+    </script>
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -194,7 +197,7 @@
             <h2 class="text-2xl font-bold serif text-[#2D2A26] mb-2">Side Hustle Access</h2>
             <p class="text-sm text-[#6B665E] mb-6">Authorized Personnel Only</p>
             
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+            <form id="loginForm" onsubmit="return handleLogin(event)" class="space-y-4">
                 <div class="text-left">
                     <label for="username" class="block text-sm font-medium text-[#2D2A26] mb-2">Username</label>
                     <input type="text" id="username" class="auth-input" placeholder="Enter username" required autocomplete="username">
