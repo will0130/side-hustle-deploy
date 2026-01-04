@@ -532,12 +532,19 @@
         
         function handleLogin(event) {
             event.preventDefault();
+            console.log('Login attempt started');
+            
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
             const errorEl = document.getElementById('authError');
             
+            console.log('Username:', username, 'Password length:', password.length);
+            console.log('Valid user?', AUTHORIZED_USERS[username] !== undefined);
+            
             // Check credentials
             if (AUTHORIZED_USERS[username] && AUTHORIZED_USERS[username] === password) {
+                console.log('Login successful!');
+                
                 // Create session
                 const sessionData = {
                     username: username,
@@ -546,7 +553,11 @@
                 localStorage.setItem('crownJewelSession', JSON.stringify(sessionData));
                 
                 // Hide auth overlay immediately
-                document.getElementById('authOverlay').classList.add('hidden');
+                const overlay = document.getElementById('authOverlay');
+                console.log('Hiding overlay');
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+                
                 document.getElementById('userDisplay').textContent = username;
                 
                 // Reset form
@@ -557,10 +568,12 @@
                 startInactivityMonitor();
                 
                 // Initialize app
+                console.log('Initializing app');
                 initializeApp();
                 
                 return false;
             } else {
+                console.log('Login failed');
                 // Show error
                 errorEl.classList.add('show');
                 document.getElementById('password').value = '';
