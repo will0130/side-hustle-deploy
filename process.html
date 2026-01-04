@@ -1011,9 +1011,15 @@
             // Check if user is already authenticated
             if (checkAuth()) {
                 document.getElementById('authOverlay').classList.add('hidden');
-                const username = JSON.parse(localStorage.getItem('sideHustleSession')).username;
-                document.getElementById('userDisplay').textContent = username;
-                document.getElementById('userDisplay2').textContent = username;
+                try {
+                    const username = JSON.parse(localStorage.getItem('sideHustleSession')).username;
+                    const userDisplay = document.getElementById('userDisplay');
+                    const userDisplay2 = document.getElementById('userDisplay2');
+                    if (userDisplay) userDisplay.textContent = username;
+                    if (userDisplay2) userDisplay2.textContent = username;
+                } catch(e) {
+                    console.log('Error setting username display');
+                }
                 startInactivityMonitor();
                 initializeApp();
             } else {
